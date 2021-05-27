@@ -1,7 +1,6 @@
 # Workflowy-WFx
 
 ## Table of Contents
-- [Table of Contents](#table-of-contents)
 - [Description](#description)
 - [Scripts](#scripts)
   * [Multi Noter](#multi-noter)
