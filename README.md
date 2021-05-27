@@ -1,6 +1,13 @@
 # Workflowy-WFx
 
+## Table of Contents
+{:toc}
+
 This repository that contains all of the scripts that I'm constantly doing for the extension of WFx for Workflowy. 
+
+## Scripts
+Scripts available
+
 
 ## Reference
 - [Workflowy](www.workflowy.com)
