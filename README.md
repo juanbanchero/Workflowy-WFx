@@ -39,8 +39,9 @@ One image speaks more that a thousand words (In this case, 3 images)
 
 ### Move to Grandchild 
 If you know _moveToChild_ from the WFx extension, probably you guess what this does. It moves the node that you are, to a grand children location.
-**Use Case**
-Let's say you are a calendar driven task person. So probably in WFx you have a stucture like this for each day:
+#### Use case
+
+Let's say you are a calendar driven task person. So probably in Workflowy you have a stucture like this for each day:
 - Calendar
   * January
     * 2021.01.06
