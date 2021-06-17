@@ -65,7 +65,7 @@ Once you select your month, this other dialog will come up:
 
 ...and that's all. Use your imagination, this was only for dates, but it could be widely used in another ways.
 
-## [WIP] Habit Tracker
+## Habit Tracker
 ![image](https://user-images.githubusercontent.com/26557565/122472093-7e8ac600-cf96-11eb-8af4-b7a77e846d97.png)
 
 ## Reference
