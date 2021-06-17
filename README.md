@@ -42,19 +42,18 @@ If you know _moveToChild_ from the WFx extension, probably you guess what this d
 **Use Case**
 Let's say you are a calendar driven task person. So probably in WFx you have a stucture like this for each day:
 - Calendar
- - January
-  - 2021.01.06
-  - 2021.01.07
-  - 2021.01.08
- - February
-  - 2021.02.06
-  - 2021.02.07
-  - 2021.02.08
- - March
-  - 2021.03.06
-  - 2021.03.07
-  - 2021.03.08
- - ..... 
+  * January
+    * 2021.01.06
+    * 2021.01.07
+    * 2021.01.08
+  * February
+    * 2021.02.06
+    * 2021.02.07
+    * 2021.02.08
+  * March
+    * 2021.03.06
+    * 2021.03.07
+    * 2021.03.08
 
 So, now, you are in your inbox dealing with tasks from that day and you come across a task that you would like to do on 2021.01.06, no problem! You activate WFx, type your shortcut for _moveToGrandchild_ and something like this will come up:
 
