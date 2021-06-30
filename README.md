@@ -76,4 +76,4 @@ Once you select your month, this other dialog will come up:
 ## Reference
 - [Workflowy](www.workflowy.com)
 - [WFx extension](https://rawbytz.wordpress.com/2021/04/18/what-happened-to-wfx/)
-- [WIP] Shared node to make easy installation of scripts
+- [Wfx + - Shared node for scripts](https://workflowy.com/s/wfx/00IhBAq7YIIJCJh4)
