@@ -14,12 +14,16 @@
 This repository that contains all of the scripts that I'm constantly doing for the extension of WFx for Workflowy.
 
 ## Instructions
-To setup one of this scripts you should have WFx for Workflowy and activate the options.
-- Active WFx
-- Type "wfo"
-- Go to "add Javascript" tab and paste the selected code
-- Next put the shortcut for the code 
-- Final step is to manually fill the params of the function with the proper values. Ex. If it says WID="''" transforms into WID="b59a5a0d4c05" (the alphanumeric sequence is the last part of your selected bullet in Worflowy, also with Ctrl+L or CMD+L you copy the link node and take the last part) 
+To setup one of this scripts you should have WFx for Workflowy.
+- My shared link is this one: [Wfx +](https://workflowy.com/s/wfx/00IhBAq7YIIJCJh4)
+IMPORTANT! You must add the WFx+ share to your outline for scripts to work properly.
+- To create a shortcut, zoom on the bullet with JavaScript in the note.
+- Scripts will have one of these tags in the name: #rfw, #setup, or #js.
+- Activate Shortcut Maker wfs and follow the prompts.
+- #rfw (Run From WorkFlowy) These scripts will only prompt you for a shortcut.
+- #setup These will have additional setup prompts for custom settings.
+- #js These scripts are designed to run in all tabs, not just WorkFlowy.
+
 
 ## Scripts
 ### Multi Noter
