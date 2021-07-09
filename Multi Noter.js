@@ -1,5 +1,5 @@
 // Multi Noter
-(function search_nodes() {
+(function multiNoter_1_2() {
     function toastMsg(str, sec, err) {
         WF.showMessage(str, err);
         setTimeout(WF.hideMessage, (sec || 2) * 1e3)
@@ -8,61 +8,27 @@
     const htmlEscTextForContent = str => str.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/\u00A0/g, " ");
     const htmlEscText = str => str.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 
-    function copyThat(str) {
-        const t = document.createElement("textarea");
-        t.value = str;
-        document.body.appendChild(t);
-        t.select();
-        const success = document.execCommand("copy");
-        document.body.removeChild(t);
-        return success
-    }
-function multiSelectMatches() {
-    function applyToEachItem(functionToApply, parent) {
-        functionToApply(parent);
-        for (let child of parent.getChildren()) {
-            applyToEachItem(functionToApply, child)
-        }
-    }
-
-    function findMatchingItems(itemPredicate, parent) {
-        const matches = [];
-
-        function addIfMatch(item) {
-            if (itemPredicate(item)) {
-                matches.push(item)
-            }
-        }
-        applyToEachItem(addIfMatch, parent);
-        return matches
-    }
-
-    function isItemWithVisibleMatch(item) {
-        const isVisible = WF.completedVisible() || !item.isWithinCompleted();
-        return item.data.search_result && item.data.search_result.matches && isVisible
-    }
-    const matches = findMatchingItems(isItemWithVisibleMatch, WF.currentItem());
-    blurFocusedContent();
-    WF.setSelection(matches)
-}
-
-    const mirrorMatches = (userInput) => {
-        setTimeout(() => {
-            multiSelectMatches();
-            }, 100)
-    //const matches = findMatchingItems(isItemWithVisibleMatch, WF.currentItem());
-    //blurFocusedContent();
-    //WF.setSelection(matches)
-    }
     function pendOmatic(items, input, typeOfWrite) {
-        const inputTag = input.match(/[#@][a-zA-Z0-9][\w:-]*/);
-        const inputTagTxt = inputTag ? inputTag[0].replace(/:{1,2}$/, "") : "";
-        const inputHasTagBorder = inputTag ? typeOfWrite === "prePend" ? input.endsWith(inputTagTxt) : input.startsWith(inputTagTxt) : false;
-        input = htmlEscTextForContent(input);
+        let inputTagOrUrl;
+        let inputTagTxt;
+        const inputUrl = input.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/);
+        if (inputUrl[0]){
+           const match = inputUrl[0].match(/[a-f0-9]{12}/);
+           const item = WF.getItemById(WF.shortIdToId(match[0]));
+           const formattedElement = `<a href='${inputUrl[0]}'>${item.getNameInPlainText()}</a>`;
+           inputTagOrUrl = formattedElement;
+        }
+        else {
+           const tagInput = input.match(/[#@][a-zA-Z0-9][\w:-]*/);
+           const inputTagTxt = tagInput ? tagInput[0].replace(/:{1,2}$/, "") : "";
+           inputTagOrUrl = inputTagTxt;
+        }
+        const inputHasTagBorder = inputTagOrUrl ? typeOfWrite === "prePend" ? input.endsWith(inputTagTxt) : input.startsWith(inputTagTxt) : false;
+        input = inputUrl ? inputTagOrUrl : htmlEscTextForContent(input);
         const pend = inputHasTagBorder ? typeOfWrite === "prePend" ? `${input} ` : ` ${input}` : input;
         WF.editGroup(() => {
             items.forEach(item => {
-                if ((!inputTag || !itemNoteHasTag(item, inputTagTxt)) && typeOfWrite !== "newLine") {
+                if ((!inputTagOrUrl || !itemNoteHasTag(item, inputTagTxt)) && typeOfWrite !== "newLine") {
                     const linesOfNote = item.getNote().split('\n');
                     const nuName = typeOfWrite === "prePend" ? pend + linesOfNote[0].trimLeft()  : linesOfNote[0].trimRight() + pend;
                     WF.setItemNote(item, `${nuName}\n${linesOfNote.slice(1).join('\n')}`);
@@ -89,12 +55,14 @@ function multiSelectMatches() {
         const inputStyle = `#inputBx{${getColors()}width:95%;height:20px;display:block;margin-top:5px;border:1px solid #ccc;border-radius:4px;padding:5px}`;
         const buttonStyle = '.btnX{font-size:18px;background-color:steelblue;border:2px solid;border-radius:20px;color:#fff;padding:5px 15px;margin-top:16px;margin-right:16px}.btnX:focus{border-color:#c4c4c4}';
         const box = `<div><input id="inputBx" type="text" spellcheck="false" list="tagPicker">${createAllTagsDataList()}</div>`;
-        const button = addButton(1, "Submit &#9094;")
-        WF.showAlertDialog(`<style>${htmlEscText(inputStyle+buttonStyle)}</style><div>${bodyHtml}</div>${box}<div>${button}</div>`, "Enter tag or text:");
+        const buttons = addButton(1, "Append &#8614;") + addButton(2, "&#8612; Prepend") + addButton(3, "&#8615; New Line");
+        WF.showAlertDialog(`<style>${htmlEscText(inputStyle+buttonStyle)}</style><div>${bodyHtml}</div>${box}<div>${buttons}</div>`, "Enter tag or text:");
         setTimeout(() => {
             let userInput;
             const inputBx = document.getElementById("inputBx");
             const btn1 = document.getElementById("btn1");
+            const btn2 = document.getElementById("btn2");
+            const btn3 = document.getElementById("btn3")
             inputBx.select();
             inputBx.addEventListener("keyup", event => {
                 if (event.key === "Enter") btn1.click()
@@ -102,12 +70,23 @@ function multiSelectMatches() {
             btn1.onclick = () => {
                 userInput = inputBx.value;
                 WF.hideDialog();
-                setTimeout(() => {
-                  (() => WF.search(userInput))();
-                    mirrorMatches(userInput);
-                }, 50)
+                setTimeout(() => pendOmatic(selections, userInput), 50)
             };
+            btn2.onclick = () => {
+                userInput = inputBx.value;
+                WF.hideDialog();
+                setTimeout(() => pendOmatic(selections, userInput, "prePend"), 50)
+            }
+            btn3.onclick = () => {
+                userInput = inputBx.value;
+                WF.hideDialog();
+                setTimeout(() => pendOmatic(selections, userInput, "newLine"), 50)
+            }
         }, 100)
     }
-    multiTagAlert(`<i>Dashboard</i>`)
+    const selections = WF.getSelection().filter(item => !item.isReadOnly());
+    if (selections.length === 0) {
+        return void toastMsg(`Use WorkFlowy's multi-select to select bullets, and try again. <i>(Alt+Click or Cmd+Click)</i>`, 3, true)
+    }
+    multiTagAlert(`<i>${selections.length} items</i>`)
 })();
