@@ -29,6 +29,8 @@ IMPORTANT! You must add the WFx+ share to your outline for scripts to work prope
 ### Multi Noter
 ![image](https://user-images.githubusercontent.com/26557565/122469909-d7a52a80-cf93-11eb-8a5e-def46b79772a.png)
 
+**Note**: If in multi noter you put a link to another Workflowy node, it will paste the link formatted!
+
 Will display a list of tags, where you can select one. Also you can type whatever you want and it provides you with three options.
 - Append which will put the tag at the end of your first line in the note
 - Prepend which will put the tag at the beginning of your note
